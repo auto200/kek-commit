@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "name": "kekCommit",
+  "version": "0.1.0",
+
+  "description": "Adds a red border to all webpages matching mozilla.org.",
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.github.com/*"],
+      "js": ["index.js"]
+    }
+  ],
+  "web_accessible_resources": ["assets/*.png"]
+}
