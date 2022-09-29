@@ -47,7 +47,8 @@ const kekify = (elementsAndOverlays) => {
 };
 
 const main = () => {
-  if (!calenderWrapperEl) return;
+  if (document.readyState !== "complete") return;
+  document.removeEventListener("readystatechange", main);
 
   const elementsAndOverlays = [...commitDaysEls]
     .map((commitDayEl) => {
@@ -68,4 +69,4 @@ const main = () => {
     kekify(elementsAndOverlays);
   });
 };
-main();
+document.addEventListener("readystatechange", main);
