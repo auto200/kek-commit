@@ -3,7 +3,7 @@
   "name": "kekCommit",
   "version": "0.1.0",
 
-  "description": "Adds a red border to all webpages matching mozilla.org.",
+  "description": "Overlays empty commit days on GitHub profile calendar with KEK",
 
   "content_scripts": [
     {
