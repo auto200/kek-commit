@@ -12,7 +12,7 @@ const commitDaysEls = document.querySelectorAll(
 const isNotNullable = (a) => a !== null && a !== undefined;
 
 // https://stackoverflow.com/a/47768164
-const getOffset = (element) => {
+const getOffsetAndDims = (element) => {
   const bound = element.getBoundingClientRect();
   const html = document.documentElement;
 
@@ -29,7 +29,7 @@ const kekify = (elementsAndOverlays) => {
 
   elementsAndOverlays.forEach(({ commitDayEl, overlayImgEl }) => {
     const { left: wrapperLeft } = calenderWrapperEl.getBoundingClientRect();
-    const { top, left, width, height } = getOffset(commitDayEl);
+    const { top, left, width, height } = getOffsetAndDims(commitDayEl);
 
     const isNodeInvisible = left < wrapperLeft;
     if (isNodeInvisible) {
@@ -47,9 +47,6 @@ const kekify = (elementsAndOverlays) => {
 };
 
 const main = () => {
-  if (document.readyState !== "complete") return;
-  document.removeEventListener("readystatechange", main);
-
   const elementsAndOverlays = [...commitDaysEls]
     .map((commitDayEl) => {
       const hasCommit = commitDayEl.getAttribute("data-level") !== "0";
@@ -69,4 +66,8 @@ const main = () => {
     kekify(elementsAndOverlays);
   });
 };
-document.addEventListener("readystatechange", main);
+//give it a extra time to load assets, it seems that there are differences
+//between load point in time of extension between firefox and chrome. In some cases there
+//maybe assets that are still loading, causing ui shift after they load.
+//Resulting in overlay images being placed in the not proper (at the time) place
+setTimeout(main, 1000);
